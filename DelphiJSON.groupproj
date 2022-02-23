@@ -1,0 +1,48 @@
+﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <PropertyGroup>
+        <ProjectGuid>{57DDFA18-47F0-4F25-AC67-8A0EEE89859B}</ProjectGuid>
+    </PropertyGroup>
+    <ItemGroup>
+        <Projects Include="JsonWriting\JsonWriting.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="JsonReading\JsonReading.dproj">
+            <Dependencies/>
+        </Projects>
+    </ItemGroup>
+    <ProjectExtensions>
+        <Borland.Personality>Default.Personality.12</Borland.Personality>
+        <Borland.ProjectType/>
+        <BorlandProject>
+            <Default.Personality/>
+        </BorlandProject>
+    </ProjectExtensions>
+    <Target Name="JsonWriting">
+        <MSBuild Projects="JsonWriting\JsonWriting.dproj"/>
+    </Target>
+    <Target Name="JsonWriting:Clean">
+        <MSBuild Projects="JsonWriting\JsonWriting.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="JsonWriting:Make">
+        <MSBuild Projects="JsonWriting\JsonWriting.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="JsonReading">
+        <MSBuild Projects="JsonReading\JsonReading.dproj"/>
+    </Target>
+    <Target Name="JsonReading:Clean">
+        <MSBuild Projects="JsonReading\JsonReading.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="JsonReading:Make">
+        <MSBuild Projects="JsonReading\JsonReading.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Build">
+        <CallTarget Targets="JsonWriting;JsonReading"/>
+    </Target>
+    <Target Name="Clean">
+        <CallTarget Targets="JsonWriting:Clean;JsonReading:Clean"/>
+    </Target>
+    <Target Name="Make">
+        <CallTarget Targets="JsonWriting:Make;JsonReading:Make"/>
+    </Target>
+    <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
+</Project>
