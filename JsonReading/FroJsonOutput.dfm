@@ -42,6 +42,7 @@ object FrmJsonRead: TFrmJsonRead
       Align = alRight
       Caption = 'Read With Reader'
       TabOrder = 1
+      OnClick = BtnReadWithReaderClick
     end
     object BtnReadTokens: TButton
       Left = 11
