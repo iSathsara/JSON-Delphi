@@ -23,10 +23,12 @@ type
     BitBtn1: TBitBtn;
     procedure BtnReadTokensClick(Sender: TObject);
     procedure BtnReadWithDomClick(Sender: TObject);
+    procedure BtnReadWithReaderClick(Sender: TObject);
   private
     { Private declarations }
     function GetJsonText: String;
     procedure ProcessStockObj(stocks: TStocks; stockObj: TJSONObject);
+    procedure ProcessStocksRead(stocks: TStocks; jtr : TJsonTextReader);
     procedure DisplayStocks(stocks:TStocks);
     procedure Log(s: String);
   public
@@ -99,6 +101,32 @@ begin
     stocks.Free;
   end;
 end;
+{______________________________________________________________________________}
+procedure TFrmJsonRead.BtnReadWithReaderClick(Sender: TObject);
+Var jtr: TJsonTextReader; sr: TStringReader; stocks: TStocks;
+begin
+  stocks := TStocks.Create;
+  try
+    sr := TStringReader.Create(GetJsonText);
+    try
+      jtr := TJsonTextReader.Create(sr);
+      try
+        while jtr.Read do begin
+          if jtr.TokenType = TJsonToken.StartObject then
+            ProcessStocksRead(stocks, jtr);
+        end;
+      finally
+        jtr.Free;
+      end;
+    finally
+      sr.Free;
+    end;
+    DisplayStocks(stocks);
+  finally
+    stocks.Free;
+  end;
+end;
+{______________________________________________________________________________}
 procedure TFrmJsonRead.DisplayStocks(stocks: TStocks);
 var stock: TStock;
     i : integer;
@@ -151,6 +179,29 @@ begin
       stock.price := TJSONNumber(val).AsDouble;
 
   stocks.Add(stock);
+end;
+{______________________________________________________________________________}
+procedure TFrmJsonRead.ProcessStocksRead(stocks: TStocks; jtr: TJsonTextReader);
+Var stock: TStock;
+begin
+  stock := TStock.Create;
+  while jtr.Read do
+  begin
+    if jtr.TokenType = TJsonToken.PropertyName then begin
+      if jtr.Value.ToString = 'symbol' then begin
+        jtr.Read;
+        stock.Symbol := jtr.Value.AsString;
+      end
+      else if jtr.Value.ToString = 'price' then begin
+        jtr.Read;
+        stock.price := jtr.Value.AsExtended;
+      end
+    end
+    else if jtr.TokenType = TJsonToken.EndObject then begin
+      stocks.add(stock);
+      exit;
+    end;
+  end;
 end;
 
 end.
