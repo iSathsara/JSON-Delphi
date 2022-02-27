@@ -9,6 +9,9 @@
         <Projects Include="JsonReading\JsonReading.dproj">
             <Dependencies/>
         </Projects>
+        <Projects Include="JsonWorkbench\JsonWorkbench.dproj">
+            <Dependencies/>
+        </Projects>
     </ItemGroup>
     <ProjectExtensions>
         <Borland.Personality>Default.Personality.12</Borland.Personality>
@@ -35,14 +38,23 @@
     <Target Name="JsonReading:Make">
         <MSBuild Projects="JsonReading\JsonReading.dproj" Targets="Make"/>
     </Target>
+    <Target Name="JsonWorkbench">
+        <MSBuild Projects="JsonWorkbench\JsonWorkbench.dproj"/>
+    </Target>
+    <Target Name="JsonWorkbench:Clean">
+        <MSBuild Projects="JsonWorkbench\JsonWorkbench.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="JsonWorkbench:Make">
+        <MSBuild Projects="JsonWorkbench\JsonWorkbench.dproj" Targets="Make"/>
+    </Target>
     <Target Name="Build">
-        <CallTarget Targets="JsonWriting;JsonReading"/>
+        <CallTarget Targets="JsonWriting;JsonReading;JsonWorkbench"/>
     </Target>
     <Target Name="Clean">
-        <CallTarget Targets="JsonWriting:Clean;JsonReading:Clean"/>
+        <CallTarget Targets="JsonWriting:Clean;JsonReading:Clean;JsonWorkbench:Clean"/>
     </Target>
     <Target Name="Make">
-        <CallTarget Targets="JsonWriting:Make;JsonReading:Make"/>
+        <CallTarget Targets="JsonWriting:Make;JsonReading:Make;JsonWorkbench:Make"/>
     </Target>
     <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
 </Project>
