@@ -3,7 +3,8 @@ program JsonReading;
 uses
   Vcl.Forms,
   FroJsonOutput in 'FroJsonOutput.pas' {FrmJsonRead},
-  JsonUtils in 'JsonUtils.pas';
+  JsonUtils in 'JsonUtils.pas',
+  StockType_u in 'StockType_u.pas';
 
 {$R *.res}
 
