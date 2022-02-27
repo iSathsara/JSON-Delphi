@@ -9,6 +9,9 @@
         <Projects Include="JsonReading\JsonReading.dproj">
             <Dependencies/>
         </Projects>
+        <Projects Include="JsonTreeView\JsonTreeView.dproj">
+            <Dependencies/>
+        </Projects>
     </ItemGroup>
     <ProjectExtensions>
         <Borland.Personality>Default.Personality.12</Borland.Personality>
@@ -35,14 +38,23 @@
     <Target Name="JsonReading:Make">
         <MSBuild Projects="JsonReading\JsonReading.dproj" Targets="Make"/>
     </Target>
+    <Target Name="JsonTreeView">
+        <MSBuild Projects="JsonTreeView\JsonTreeView.dproj"/>
+    </Target>
+    <Target Name="JsonTreeView:Clean">
+        <MSBuild Projects="JsonTreeView\JsonTreeView.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="JsonTreeView:Make">
+        <MSBuild Projects="JsonTreeView\JsonTreeView.dproj" Targets="Make"/>
+    </Target>
     <Target Name="Build">
-        <CallTarget Targets="JsonWriting;JsonReading"/>
+        <CallTarget Targets="JsonWriting;JsonReading;JsonTreeView"/>
     </Target>
     <Target Name="Clean">
-        <CallTarget Targets="JsonWriting:Clean;JsonReading:Clean"/>
+        <CallTarget Targets="JsonWriting:Clean;JsonReading:Clean;JsonTreeView:Clean"/>
     </Target>
     <Target Name="Make">
-        <CallTarget Targets="JsonWriting:Make;JsonReading:Make"/>
+        <CallTarget Targets="JsonWriting:Make;JsonReading:Make;JsonTreeView:Make"/>
     </Target>
     <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
 </Project>
